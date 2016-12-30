@@ -1,0 +1,18 @@
+.container{
+    display         : flex;
+    flex-direction  : column;
+}
+.row{
+    margin-top      : 5px;
+    display         : flex;
+    flex-direction  : row;
+}
+.icon{
+    flex-basis: 20px;
+}
+.numeric{
+    flex-basis: 60px;
+}
+.label{
+    flex-basis: 60px;
+}
