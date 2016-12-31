@@ -11,8 +11,8 @@ const mapStateToProps = createSelector({
 
 const mapDispatchToProps = (dispatch) => ({
 
-    selectGeometry : ( geometry ) =>
-        dispatch( action.setObject( geometry ) )
+    selectGeometry : ( geometry, name ) =>
+        dispatch( action.setObject( geometry, name ) )
     ,
 })
 

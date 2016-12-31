@@ -2,6 +2,7 @@ import React            from 'react'
 
 import style            from './style.css'
 import Transitioned     from 'component/abstract/transitioned'
+import ClickOutside     from 'component/abstract/clickOutside'
 import InputFile        from './inputFile'
 
 import extractGeometry  from 'util/extractGeometry'
@@ -39,6 +40,8 @@ const ObjectSelector = ({ samples, opened, name,   open, close, selectGeometry }
                         <div className={ style.row }>
                             <div className={ style.icon }>{ name }</div>
                         </div>
+
+                        { next && <ClickOutside onClickOutside={ close } ignoreClassName={ style.square } /> }
 
                         {
                             ( next || previous ) && samples

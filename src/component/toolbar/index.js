@@ -9,7 +9,9 @@ const Toolbar = ({ geometry, selectGeometry, name }) =>
 (
     <div className={ style.container }>
 
-        <ObjectPreview />
+        <div className={ style.objectPreview }>
+            <ObjectPreview />
+        </div>
 
         <CutEditor width={300} height={500} />
     </div>
