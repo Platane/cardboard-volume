@@ -1,6 +1,7 @@
 
 const dep = [
     require('state/cut/param/toSchedule'),
+    require('state/timeline/toSchedule'),
 ]
 
 module.exports = ( ...args ) =>

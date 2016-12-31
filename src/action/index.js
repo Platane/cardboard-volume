@@ -21,3 +21,9 @@ export const setTimeline = k =>
         type    : 'timeline:set',
         payload : { k },
     })
+
+export const setTimelineAuto = auto =>
+    ({
+        type    : 'timeline:auto:set',
+        payload : { auto },
+    })
