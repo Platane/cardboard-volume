@@ -3,8 +3,9 @@ import { createSelector }       from '../abstract/createSelector'
 import * as action              from 'action'
 import throttle                 from 'util/time/throttle'
 
-const mapStateToProps = createSelector({
-    k :    'timeline.k',
+const mapStateToProps = state => ({
+    steps   : [ 0, 0.33, 0.66, 1 ],
+    k       : state['timeline.k'],
 })
 
 const mapDispatchToProps = (dispatch) => ({

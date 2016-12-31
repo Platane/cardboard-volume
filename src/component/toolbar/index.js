@@ -4,6 +4,7 @@ import style        from './style.css'
 
 import CutEditor        from '../cutEditor/container'
 import ObjectPreview    from '../objectPreview/container'
+import AnimationSlider  from '../animationSlider/container'
 
 const Toolbar = ({ geometry, selectGeometry, name }) =>
 (
@@ -13,7 +14,12 @@ const Toolbar = ({ geometry, selectGeometry, name }) =>
             <ObjectPreview />
         </div>
 
+        <div className={ style.slider }>
+            <AnimationSlider />
+        </div>
+
         <CutEditor width={300} height={500} />
+
     </div>
 )
 

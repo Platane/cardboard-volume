@@ -3,7 +3,6 @@ import React        from 'react'
 import style        from './style.css'
 
 import ModelView            from '../model'
-import AnimationSlider      from '../animationSlider/container'
 import ObjectSelector       from './objectSelector/state'
 import Stats                from './stats'
 
@@ -27,9 +26,6 @@ const ObjectPreview = ({ name, geometry, selectGeometry, verticeCount, triangleC
             <Stats verticeCount={verticeCount} triangleCount={triangleCount} />
         </div>
 
-        <div className={ style.slider }>
-            <AnimationSlider />
-        </div>
     </div>
 )
 

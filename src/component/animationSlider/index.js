@@ -1,11 +1,14 @@
 import React        from 'react'
 
 import style        from './style.css'
+import LiquidSlider from 'component/LiquidSlider'
 
-const Slider = ({ k, setTimeline }) =>
+const Slider = ({ k, setTimeline, steps }) =>
 (
     <div className={ style.container }>
-        <input className={ style.input } type="range" min={0} max={1} step={0.01} value={k} onChange={ e => setTimeline( +e.target.value ) } />
+
+        <LiquidSlider width={ 400 } height= { 100 } value={ k } onChange={ setTimeline } />
+
     </div>
 )
 
@@ -13,8 +16,9 @@ const { PropTypes } = React
 
 Slider.propTypes = {
 
-    // Threejs geometry
     k               : PropTypes.number.isRequired,
+
+    steps           : PropTypes.arrayOf( PropTypes.number ).isRequired,
 
     setTimeline     : PropTypes.func.isRequired,
 }
