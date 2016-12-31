@@ -49,10 +49,10 @@ module.exports = {
                         options : {
                             modules         : true,
                             importLoaders   : 1,
-                            getLocalIdent   : ( loaderContext, localIdentName, localName, options ) =>
-                                Math.random().toString(34).slice(2)
+                            localIdentName  : production
+                                ? '[emoji:6]'
+                                : '[path][name]---[local]'
                             ,
-                            // !css?modules&importLoaders=1&localIdentName=[hash:base64:6]',
                         },
                     },
                     {

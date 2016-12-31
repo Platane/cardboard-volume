@@ -5,7 +5,7 @@
     "dependencies"      : {
         "polybooljs"                : "~1.1.1",
         "three"                     : "~0.83.0",
-        "refinery-js"               : "~0.5.2",
+        "refinery-js"               : "~0.6.0",
         "redux"                     : "~3.6.0",
         "react"                     : "~15.4.1",
         "react-dom"                 : "~15.4.1",
