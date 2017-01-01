@@ -61,7 +61,7 @@ const process =  ( axe, fullSlices, base, positions, intersection ) =>
                     return
 
                 const { min, max } = intersection[ i ][ j ]
-                const h = 0.2
+                const h = 0.5
                 const marge = 2
                 const up = axe == 'v'
                     ? i % 2 == 0

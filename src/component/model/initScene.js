@@ -20,13 +20,13 @@ const initScene = () => {
         light1 = new THREE.PointLight( 0xFCEBB6, 2, 100 )
         scene.add( light1 )
 
-        scene.add( new THREE.PointLightHelper( light1, 1 ) )
+        // scene.add( new THREE.PointLightHelper( light1, 1 ) )
 
 
         light2 = new THREE.PointLight( 0x78C0A8, 2, 100 )
         scene.add( light2 )
 
-        scene.add( new THREE.PointLightHelper( light2, 1 ) )
+        // scene.add( new THREE.PointLightHelper( light2, 1 ) )
     }
 
     // add gizmo

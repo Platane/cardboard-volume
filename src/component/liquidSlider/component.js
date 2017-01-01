@@ -1,68 +1,77 @@
 import React        from 'react'
 import style        from './style.css'
 
-const s = {
-    tic : {
-        stroke      : '#333',
-        fill        : '#444',
-        strokeWidth : 0.5,
-    },
-    stick : {
-        stroke      : '#333',
-        fill        : 'none',
-        strokeWidth : 1,
-    },
-    line : {
-        stroke      : '#333',
-        fill        : 'none',
-        strokeWidth : 2,
-    },
+const slice = ( arr, e ) => {
+    if ( e <= arr[0].x )
+        return [ [], arr ]
+
+    if ( arr[ arr.length-1 ].x <= e )
+        return [ arr, [] ]
+
+    let b = 0
+    while ( arr[ b ].x <= e )
+        b = b+1
+
+    const a = b-1
+
+    const k = ( e - arr[a].x )/( arr[b].x - arr[a].x )
+
+    const u = {
+        x : e,
+        y : arr[a].y + k * ( arr[b].y - arr[a].y ),
+    }
+
+    return [ [ ...arr.slice(0,b), u ], [ u, ...arr.slice( b ) ] ]
 }
 
-const toPath = ( arr , width, height ) =>
-    'M'+arr.map( (h,i) => ( i/(arr.length-1) * width )+' '+( h * 2 ) ).join('L')
+const toPath = ( arr, width ) =>
+    'M'+arr.map( ({ x, y }) => Math.round( x * width )+' '+Math.round( y * 2 ) ).join('L')
 
 
-const render = ({ width, height, k, wave_h }, onDown) =>
-(
-    <svg
-        width={width}
-        height={height}
-        className={ style.container }
-        >
+const render = ({ width, height, k, wave_h }, onDown) => {
 
-        <g
-            ref="slideZone"
-            transform={`translate( 10, 0 ) scale(${ ( width - 20 ) / width })`}
+    const points = wave_h.map( (h,i) => ({ x:i/(wave_h.length-1), y:h }) )
+    const [ before, after ] = slice( points, k )
+
+    return (
+        <svg
+            viewBox={`-10 0 ${width+20} ${height}`}
+            width={width}
+            height={height}
+            className={ style.container }
             onMouseDown={ onDown }
             onTouchStart={ onDown }
+            ref="slideZone"
             >
 
             <rect x={0} y={0} width={width} height={height} fill="transparent" />
 
             <g transform={`translate( ${ width * k }, 40 )`}>
-                <circle cx={0} cy={0} r={5} { ...s.tic } />
+                <circle cx={0} cy={0} r={5} className={style.tic} />
             </g>
 
             <g transform={'translate( 0, 50 )'}>
-                { false && wave_h
-                    .map( (h,i) =>
-                        <line
-                            key={ i }
-                            x1={ i/(wave_h.length-1) * width }
-                            x2={ i/(wave_h.length-1) * width }
-                            y1={ 0 }
-                            y2={ h * 2 }
-                            { ...s.stick }
-                            />
-                    )
-                }
-                <path d={ toPath( wave_h, width, height) } { ...s.line } />
-            </g>
-        </g>
 
-    </svg>
-)
+                { false && points
+                       .map( ({ x,y }) =>
+                           <line
+                               key={ x }
+                               x1={ x * width }
+                               x2={ x * width }
+                               y1={ 0 }
+                               y2={ y * 2 }
+                               className={ style.stick }
+                               />
+                       )
+                   }
+
+                { before.length > 0 && <path d={ toPath( before, width ) } className={ style.line1 } /> }
+                { after.length > 0 && <path d={ toPath( after, width ) } className={ style.line2 } /> }
+            </g>
+
+        </svg>
+    )
+}
 
 const getPointerX = event =>
     event.targetTouches ? event.targetTouches[ 0 ].clientX : event.clientX

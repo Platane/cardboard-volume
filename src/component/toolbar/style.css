@@ -3,5 +3,6 @@
 }
 .slider,
 .objectPreview{
-    margin: 10px;
+    margin  : 10px;
+    width   : 220px;
 }

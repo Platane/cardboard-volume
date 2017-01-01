@@ -7,9 +7,18 @@ const Slider = ({ k, auto, steps,  setTimeline, setTimelineAuto }) =>
 (
     <div className={ style.container }>
 
-        <LiquidSlider width={ 300 } height= { 100 } value={ k } onChange={ setTimeline } />
+        <div className={ style.header } />
 
-        <div className={ style.auto } onClick={ () => setTimelineAuto( !auto ) } >{ auto ? 'pause' : 'play' }</div>
+        <div className={ style.content }>
+
+            <div className={ style.auto } onClick={ () => setTimelineAuto( !auto ) } >{ auto ? 'pause' : 'play' }</div>
+
+            <div className={ style.slider }>
+                <LiquidSlider width={ 250 } height= { 80 } value={ k } onChange={ setTimeline } />
+            </div>
+
+        </div>
+
 
     </div>
 )

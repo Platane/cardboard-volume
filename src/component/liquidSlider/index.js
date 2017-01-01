@@ -45,7 +45,7 @@ class SliderState     extends React.Component {
         const delta_x   = k - this.state.k
 
 
-        const v         = Math.min( 2,  Math.abs( delta_x/delta_t ) * 1000 )
+        const v         = Math.min( 1,  Math.abs( delta_x/delta_t ) * 800 )
 
         const wave_v = this.state.wave_v.slice()
 
@@ -100,14 +100,18 @@ class SliderState     extends React.Component {
             wave_v[ i ] += a
             wave_h[ i ] += wave_v[ i ]
 
-            idle = idle && ( Math.abs( wave_v[ i ] ) < 0.001 && Math.abs( wave_h[ i ] ) < 0.05 )
+            idle = idle && ( Math.abs( wave_v[ i ] ) < 0.005 && Math.abs( wave_h[ i ] ) < 0.1 )
         }
 
-        this.setState({ wave_v, wave_h })
-
         cancelAnimationFrame( this.timeout )
-        if( !idle )
+
+        if( idle ) {
+            this.setState({ wave_v: wave_v.map( () => 0 ), wave_h: wave_h.map( () => 0 ) })
+
+        } else {
+            this.setState({ wave_v, wave_h })
             this.timeout = requestAnimationFrame( this.loop )
+        }
     }
 
     componentWillUnmount() {

@@ -1,8 +1,8 @@
 import k    from './k'
 
-const auto = ( action, slices, k, auto = false, _slices ) => {
+const auto = ( action, geometry, k, auto = false, _geometry ) => {
 
-    if ( !slices )
+    if ( !geometry )
         return false
 
     if ( k >= 1 )
@@ -14,13 +14,13 @@ const auto = ( action, slices, k, auto = false, _slices ) => {
     if ( 'timeline:auto:set' == action.type )
         return action.payload.auto
 
-    if ( slices != _slices )
+    if ( geometry != _geometry )
         return true
 
     return auto
 }
 
 auto.source = true
-auto.dependencies = [ 'cut.slices', k ]
+auto.dependencies = [ 'object.geometry', k ]
 
 module.exports = auto

@@ -7,6 +7,6 @@ module.exports = ( store, scene, renderer, camera ) => {
     controls.enableZoom     = true
     controls.enablePan      = true
     controls.minDistance    = 1
-    controls.maxDistance    = 170
+    controls.maxDistance    = 270
     controls.addEventListener( 'change', () => 0 )
 }
