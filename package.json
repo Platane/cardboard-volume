@@ -21,6 +21,8 @@
         "css-loader"                : "~0.26.1",
         "postcss-loader"            : "~1.2.0",
         "autoprefixer"              : "~6.6.0",
+        "postcss-import"            : "~9.0.0",
+        "postcss-simple-vars"       : "~3.0.0",
         "html-loader"               : "~0.4.3",
         "raw-loader"                : "~0.5.1",
         "babel-loader"              : "~6.2.5",
