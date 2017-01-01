@@ -5,19 +5,22 @@ const production = 'production' == process.env.NODE_ENV
 
 module.exports = {
 
-    entry: {
-        'index'     : './src/index.js',
+    entry   : production
+        ? {
+            'index'     : './src/index.js',
+        }
+        : {
+            'index'     : './src/index.js',
+            'vendor'    : ['react', 'react-dom', 'redux', 'three', 'refinery-js'],
+        }
+    ,
 
-        'vendor'    : ['react', 'react-dom', 'redux', 'three', 'refinery-js'],
-
-    },
-
-    output: {
+    output  : {
         path        : path.join(__dirname, 'dist'),
         filename    : '[name].js'
     },
 
-    module: {
+    module  : {
 
         rules: [
             {
@@ -50,7 +53,7 @@ module.exports = {
                             modules         : true,
                             importLoaders   : 1,
                             localIdentName  : production
-                                ? '[emoji:6]'
+                                ? '[hash:6]'
                                 : '[path][name]---[local]'
                             ,
                         },

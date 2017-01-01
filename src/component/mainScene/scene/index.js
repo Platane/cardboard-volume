@@ -10,7 +10,7 @@ const plugins = [
 const initScene = ( store ) => {
 
     const camera    = new THREE.PerspectiveCamera( 50, 1, 0.01, 3000 )
-    camera.position.set(0, 0 , 90)
+    camera.position.set( -100, 60, -140 )
     camera.lookAt( new THREE.Vector3(0,0,0) )
     camera.updateProjectionMatrix ()
 
