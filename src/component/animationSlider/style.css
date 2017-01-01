@@ -22,6 +22,13 @@
     display             : flex;
     justify-content     : center;
     align-items         : center;
+    padding             : 14px;
+}
+.icon{
+    stroke          : $color-vibrant3;
+    stroke-width    : 6;
+    stroke-linecap  : round;
+    fill            : none;
 }
 .slider{
     position: relative;
@@ -31,6 +38,7 @@
     position            : relative;
     border-radius       : 0 0 4px 4px;
     background-color    : $color-lighter;
+    padding             : 16px 4px 4px 4px;
 }
 .header{
     border-radius       : 4px 4px 0 0;

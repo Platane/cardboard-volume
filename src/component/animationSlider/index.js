@@ -2,6 +2,7 @@ import React        from 'react'
 
 import style        from './style.css'
 import LiquidSlider from 'component/liquidSlider'
+import Icon         from 'component/icon'
 
 const Slider = ({ k, auto, steps,  setTimeline, setTimelineAuto }) =>
 (
@@ -11,10 +12,12 @@ const Slider = ({ k, auto, steps,  setTimeline, setTimelineAuto }) =>
 
         <div className={ style.content }>
 
-            <div className={ style.auto } onClick={ () => setTimelineAuto( !auto ) } >{ auto ? 'pause' : 'play' }</div>
+            <div className={ style.auto } onClick={ () => setTimelineAuto( !auto ) } >
+                <Icon icon={ auto ? 'pause' : 'play' } className={ style.icon }/>
+            </div>
 
             <div className={ style.slider }>
-                <LiquidSlider width={ 250 } height= { 80 } value={ k } onChange={ setTimeline } />
+                <LiquidSlider steps={ steps } width={ 250 } height={ 80 } value={ k } onChange={ setTimeline } />
             </div>
 
         </div>

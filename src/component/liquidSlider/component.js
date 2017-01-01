@@ -1,34 +1,8 @@
-import React        from 'react'
-import style        from './style.css'
+import React                                from 'react'
+import style                                from './style.css'
+import { slice, interpolate, toSvgPath }    from './pathUtils'
 
-const slice = ( arr, e ) => {
-    if ( e <= arr[0].x )
-        return [ [], arr ]
-
-    if ( arr[ arr.length-1 ].x <= e )
-        return [ arr, [] ]
-
-    let b = 0
-    while ( arr[ b ].x <= e )
-        b = b+1
-
-    const a = b-1
-
-    const k = ( e - arr[a].x )/( arr[b].x - arr[a].x )
-
-    const u = {
-        x : e,
-        y : arr[a].y + k * ( arr[b].y - arr[a].y ),
-    }
-
-    return [ [ ...arr.slice(0,b), u ], [ u, ...arr.slice( b ) ] ]
-}
-
-const toPath = ( arr, width ) =>
-    'M'+arr.map( ({ x, y }) => Math.round( x * width )+' '+Math.round( y * 2 ) ).join('L')
-
-
-const render = ({ width, height, k, wave_h }, onDown) => {
+const render = ({ width, height, steps, k, wave_h }, onDown) => {
 
     const points = wave_h.map( (h,i) => ({ x:i/(wave_h.length-1), y:h }) )
     const [ before, after ] = slice( points, k )
@@ -46,10 +20,6 @@ const render = ({ width, height, k, wave_h }, onDown) => {
 
             <rect x={0} y={0} width={width} height={height} fill="transparent" />
 
-            <g transform={`translate( ${ width * k }, 40 )`}>
-                <circle cx={0} cy={0} r={5} className={style.tic} />
-            </g>
-
             <g transform={'translate( 0, 50 )'}>
 
                 { false && points
@@ -63,10 +33,38 @@ const render = ({ width, height, k, wave_h }, onDown) => {
                                className={ style.stick }
                                />
                        )
-                   }
+               }
 
-                { before.length > 0 && <path d={ toPath( before, width ) } className={ style.line1 } /> }
-                { after.length > 0 && <path d={ toPath( after, width ) } className={ style.line2 } /> }
+                { before.length > 0 && <path d={ toSvgPath( before, width ) } className={ style.line1 } /> }
+                { after.length > 0 && <path d={ toSvgPath( after, width ) } className={ style.line2 } /> }
+            </g>
+
+            <g transform={'translate( 0, 50 )'}>
+                { steps
+                    .map( (x,i) => {
+                        const l      = 0.05
+                        const offset = 0.005
+
+                        let r = k < x+offset
+                            ? Math.max( ( k-(x+offset-l) ) / l, 0 )
+                            : Math.max( 1-( k-(x+offset) ) / l, 0.8 )
+
+                        const h = interpolate( points, x )
+
+                        return <g key={i} transform={`translate( ${ width * x }, ${ h > 0 ? h*2 : h*6 } )`}>
+                            { r < 1 &&
+                                <line x1={0} x2={0} y1={-3*(1-r)} y2={3*(1-r)} className={style.stepOff} />
+                            }
+                            { r > 0 &&
+                                <circle cx={0} cy={0} r={r*6} className={style.step} />
+                            }
+                        </g>
+                    })
+                }
+            </g>
+
+            <g transform={`translate( ${ width * k }, 35 ) scale(0.4)`}>
+                <path d="M 0 0 L 10 -12 Q 16 -20 16 -28 Q 16 -44 0 -44 Q -16 -44 -16 -28 Q -16 -20 -10 -12 Z M0 0 L0 80" className={style.tic} />
             </g>
 
         </svg>

@@ -6,26 +6,39 @@
     height          : 100%;
 }
 .tic{
+    /*stroke          : none;*/
+    /*fill            : $color-dark;*/
+
+    stroke          : $color-vibrant3;
+    stroke-width    : 4;
+    stroke-linecap  : round;
+    fill            : none;
+}
+.stepOff{
+    stroke          : $color-dark;
+    stroke-width    : 1;
+    stroke-linecap  : round;
+    fill            : none;
+}
+.step{
     stroke          : none;
-    fill            : $color-dark;
-    stroke-width    : 0.5;
-    stroke-linecap  :round;
+    fill            : $color-vibrant1;
 }
 .line1{
     stroke          : $color-vibrant1;
-    fill            : none;
     stroke-width    : 2;
-    stroke-linecap  :round;
+    stroke-linecap  : round;
+    fill            : none;
 }
 .line2{
     stroke          : $color-dark;
-    fill            : none;
     stroke-width    : 2;
-    stroke-linecap  :round;
+    stroke-linecap  : round;
+    fill            : none;
 }
 .stick{
     stroke          : $color-dark;
+    stroke-width    : 0.5;
+    stroke-linecap  : round;
     fill            : none;
-    stroke-width    : 0.1;
-    stroke-linecap  :round;
 }
