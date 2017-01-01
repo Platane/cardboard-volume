@@ -1,7 +1,7 @@
 import React        from 'react'
 
 import style        from './style.css'
-import LiquidSlider from 'component/LiquidSlider'
+import LiquidSlider from 'component/liquidSlider'
 
 const Slider = ({ k, auto, steps,  setTimeline, setTimelineAuto }) =>
 (
