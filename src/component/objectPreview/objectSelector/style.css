@@ -1,3 +1,5 @@
+@import '../../theme/palette.css';
+
 .container{
     position        : relative;
 
@@ -11,6 +13,10 @@
     margin-left     : 30px;
     padding-left    : 20px;
     border-radius   : 2px 0 0 2px;
+
+    font-family     : helvetica;
+    font-size       : 12px;
+    font-weight     : bold;
 }
 .ribbon,
 .row{
@@ -20,12 +26,18 @@
     display         : flex;
     justify-content : center;
     align-items     : center;
-
-    cursor          : pointer;
-
-    color           : #F07818;
+    color           : $color-vibrant3;
 }
-
+.iconWrapper{
+    padding         : 12px;
+}
+.icon{
+    stroke          : $color-vibrant3;
+    stroke-width    : 3;
+    stroke-linecap  : round;
+    stroke-linejoin : round;
+    fill            : none;
+}
 .square{
     position        : absolute;
     top             : -10px;
@@ -35,6 +47,8 @@
     overflow        : hidden;
     z-index         : 1;
     border-radius   : 2px;
+
+    cursor          : pointer;
 
     background-color: #222;
     box-shadow      : 0 0 8px 0px rgba(0,0,0,0.5);

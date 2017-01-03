@@ -3,6 +3,7 @@ import React            from 'react'
 import style            from './style.css'
 import Transitioned     from 'component/abstract/transitioned'
 import ClickOutside     from 'component/abstract/clickOutside'
+import Icon             from 'component/icon'
 import InputFile        from './inputFile'
 
 import extractGeometry  from 'util/extractGeometry'
@@ -35,10 +36,12 @@ const ObjectSelector = ({ samples, opened, name,   open, close, selectGeometry }
         <Transitioned toTransition={ opened } delay={ 300 }>
             {
                 ({ next, previous, transition }) =>
-                    <div className={ style.square } onClick={ open } style={ next ? { height: ( samples.filter( x => x.name != name ).length +2 ) * 50 } : {} }>
+                    <div className={ style.square } onClick={ opened ? close : open } style={ next ? { height: ( samples.filter( x => x.name != name ).length +2 ) * 50 } : {} }>
 
-                        <div className={ style.row }>
-                            <div className={ style.icon }>{ name }</div>
+                        <div className={ style.row +' '+style.rowSelected }>
+                            <div className={ style.iconWrapper }>
+                                <Icon icon={name} className={ style.icon } />
+                            </div>
                         </div>
 
                         { next && <ClickOutside onClickOutside={ close } ignoreClassName={ style.square } /> }
@@ -48,7 +51,9 @@ const ObjectSelector = ({ samples, opened, name,   open, close, selectGeometry }
                                 .filter( x => x.name != name )
                                 .map( ({ geometry, name }) =>
                                     <div key={name} className={ style.row } onClick={() => selectGeometry( geometry, name )}>
-                                        <div className={ style.icon }>{ name }</div>
+                                        <div className={ style.iconWrapper }>
+                                            <Icon icon={name} className={ style.icon } />
+                                        </div>
                                     </div>
                                 )
                         }
