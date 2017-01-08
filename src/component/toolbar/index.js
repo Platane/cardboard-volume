@@ -18,7 +18,9 @@ const Toolbar = ({ geometry, selectGeometry, name }) =>
             <AnimationSlider />
         </div>
 
-        <CutEditor width={300} height={500} />
+        <div className={ style.editor }>
+            <CutEditor width={300} height={300} />
+        </div>
 
     </div>
 )

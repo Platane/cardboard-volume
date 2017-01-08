@@ -1,0 +1,24 @@
+@import '../theme/palette.css';
+
+.container{
+
+}
+.header{
+    border-radius       : 4px 4px 0 0;
+    position            : relative;
+    height              : 60px;
+    background-color    : $color-vibrant1;
+    background-image    : linear-gradient( 180deg, rgba(0,0,0,0) 90%, rgba(0,0,0,0.2) 100% );
+}
+.content{
+    background-color    : $color-lighter;
+    border-radius       : 0 0 4px 4px;
+    padding             : 10px;
+    display             : flex;
+    position            : relative;
+    height              : 230px;
+}
+.drawZone{
+    width               : 100%;
+    height              : 100%;
+}
