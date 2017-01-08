@@ -33,7 +33,8 @@ class MainScene     extends React.Component {
                 canvas.parentNode.removeChild( canvas )
 
             this.refs.container.appendChild( canvas )
-            canvas.style=`width:${width}px;height:${height}px;`
+            canvas.style.width  = width+'px'
+            canvas.style.height = height+'px'
 
         } else
             requestAnimationFrame( () => this.forceUpdate() )

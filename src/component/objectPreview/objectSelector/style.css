@@ -28,6 +28,7 @@
     align-items     : center;
     color           : $color-vibrant3;
 }
+.rowSelected{}
 .iconWrapper{
     padding         : 12px;
 }

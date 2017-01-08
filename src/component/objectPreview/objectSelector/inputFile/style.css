@@ -5,4 +5,5 @@
     width       : 2000px;
     height      : 2000px;
     cursor      : pointer;
+    opacity     : 0.01;
 }
