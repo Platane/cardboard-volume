@@ -3438,6 +3438,10 @@ react-dom@~15.4.1:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
+react-propstransition@~2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-propstransition/-/react-propstransition-2.0.0.tgz#befff0c7af02d94ba68ef76400850f7e0b5a938e"
+
 react-redux@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.1.tgz#84a41bd4cdd180452bb6922bc79ad25bd5abb7c4"

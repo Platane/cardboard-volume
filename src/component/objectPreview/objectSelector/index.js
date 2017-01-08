@@ -1,7 +1,7 @@
 import React            from 'react'
 
 import style            from './style.css'
-import Transitioned     from 'component/abstract/transitioned'
+import {Transition}     from 'react-propstransition'
 import ClickOutside     from 'component/abstract/clickOutside'
 import Icon             from 'component/icon'
 import InputFile        from './inputFile'
@@ -14,7 +14,7 @@ const loadGeometry   = file =>
         if ( 'undefined' == typeof FileReader)
             reject()
 
-        const fr = new FileReader
+        const fr = new window.FileReader
 
         fr.onload = () => resolve( extractGeometry( fr.result ) )
 
@@ -33,7 +33,7 @@ const ObjectSelector = ({ samples, opened, name,   open, close, selectGeometry }
             <div className={ style.name }>{ name }</div>
         </div>
 
-        <Transitioned toTransition={ opened } delay={ 300 }>
+        <Transition toTransition={ opened } delay={ 300 }>
             {
                 ({ next, previous, transition }) =>
                     <div className={ style.square } onClick={ opened ? close : open } style={ next ? { height: ( samples.filter( x => x.name != name ).length +2 ) * 50 } : {} }>
@@ -66,7 +66,7 @@ const ObjectSelector = ({ samples, opened, name,   open, close, selectGeometry }
                         }
                     </div>
             }
-        </Transitioned>
+        </Transition>
     </div>
 )
 
