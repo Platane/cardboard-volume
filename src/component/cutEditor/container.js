@@ -6,6 +6,8 @@ import throttle                 from 'util/time/throttle'
 const mapStateToProps = createSelector({
     boundingBox     : 'object.boundingBox',
     boundingSphere  : 'object.boundingSphere',
+    h_sliceLayer    : 'cut.h_slice.layers',
+    h_sliceUnion    : 'cut.h_slice.union',
     base            : 'cut.param.base.complete',
     positions       : 'cut.param.positions',
     stepWidth       : 'cut.param.stepWidth',

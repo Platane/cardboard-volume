@@ -9,26 +9,33 @@ const dot = ( a, b ) =>
 
 const style = {
     boundingSphere : {
-        fill        : 'none',
-        stroke      : palette.vibrant[2],
-        strokeWidth : 0.2,
+        fill            : 'none',
+        stroke          : palette.vibrant[2],
+        strokeWidth     : 0.2,
+        strokeLinecap   : 'round',
+        strokeLinejoin  : 'round',
+    },
+    outline       : {
+        fill            : 'none',
+        stroke          : palette.vibrant[0],
+        strokeWidth     : 0.6,
+        strokeLinecap   : 'round',
+        strokeLinejoin  : 'round',
     },
 }
 
 const ObjectShape = ( props ) => {
 
-    const { boundingSphere, boundingBox, base } = props
+    const { boundingBox, base, h_sliceLayer, h_sliceUnion } = props
 
-    const r = boundingSphere.radius
-
-    let d
+    let d_box
     {
         const top       = dot( base.v, boundingBox.min )
         const bottom    = dot( base.v, boundingBox.max )
         const left      = dot( base.u, boundingBox.min )
         const right     = dot( base.u, boundingBox.max )
 
-        d = [
+        d_box = [
             'M',    left,   bottom,
             'L',    right,  bottom,
             'L',    right,  top,
@@ -37,10 +44,34 @@ const ObjectShape = ( props ) => {
         ].join(' ')
     }
 
+    const d_slice = h_sliceLayer
+        .map( ({ shapes }) =>
+            shapes.map( shape =>
+                [ shape.hull, ...shape.holes ]
+                    .map( polygon =>
+                        'M' + polygon.map( p => p.x+' '+p.y ).join('L')+'Z'
+                    )
+                    .join(' ')
+            )
+            .join(' ')
+        )
+        .join(' ')
+
+    const d_outline = h_sliceUnion
+        .map( shape =>
+            [ shape.hull, ...shape.holes ]
+                .map( polygon =>
+                    'M' + polygon.map( p => p.x+' '+p.y ).join('L')+'Z'
+                )
+                .join(' ')
+        )
+        .join(' ')
+
+
     return (
         <g>
-            <circle { ...style.boundingSphere } cx={ 0 } cy={ 0 } r={ r } />
-            <path { ...style.boundingSphere } d={ d } />
+            <path { ...style.boundingSphere } d={ d_slice } />
+            <path { ...style.outline } d={ d_outline } />
         </g>
     )
 }
