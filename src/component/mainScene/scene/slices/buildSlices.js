@@ -51,6 +51,66 @@ const buildSlices = ( slices, origin, stepWidth, h=0.5, mat ) =>
                     const UVGenerator = createUVGenerator( origin, stepWidth, axe == 'u' ? -100 : 100 )
                     const geometry = new THREE.ExtrudeGeometry( shape, { amount: h, bevelEnabled: false, UVGenerator })
 
+                    // aomap
+                    geometry.faceVertexUvs[1] = geometry.faceVertexUvs[0].slice()
+
+                    // texture map
+                    {
+                        if( !geometry.boundingBox )
+                            geometry.computeBoundingBox()
+
+                        const bb = geometry.boundingBox
+
+                        const w = 0.5 + Math.random()*0.2
+                        const h = w * ( bb.max.y - bb.min.y ) / ( bb.max.x - bb.min.x )
+
+                        const ox = ( 1 - w )* Math.random()
+                        const oy = ( 1 - h )* Math.random()
+
+                        const proj = p =>
+                            new THREE.Vector2(
+                                ox + ( p.x - bb.min.x ) / ( bb.max.x - bb.min.x ) * w,
+                                oy + ( p.y - bb.min.y ) / ( bb.max.y - bb.min.y ) * h
+                            )
+
+                        const rot_x = Math.random() > 0.5
+                        const rot_y = Math.random() > 0.5
+
+
+                        const rot = p =>
+                            new THREE.Vector2( rot_x ? p.x : 1-p.x , rot_y ? p.y : 1-p.y )
+
+                        const inv   = Math.random() > 0.5
+
+                        const rot2 = p =>
+                            new THREE.Vector2( inv ? p.x : p.y, inv ? p.y : p.x )
+
+
+                        const projCyl = p => {
+
+                            const angle = Math.atan2( p.y - ( bb.max.y + bb.min.y )/2, p.x - ( bb.max.x + bb.min.x )/2 )
+
+                            return new THREE.Vector2(
+                                angle * 2.4,
+                                p.z > ( bb.max.z + bb.min.z )/2 ? 1 : 0
+                            )
+                        }
+
+                        geometry.faces.forEach( face =>
+                            face.materialIndex = Math.abs( face.normal.z ) > 0.9 ? 0 : 1
+                        )
+
+                        geometry.faceVertexUvs[0] = geometry.faces.map( face =>
+                            [ face.a, face.b, face.c ].map( vertex_id =>
+
+                                Math.abs( face.normal.z ) > 0.9
+                                    ? rot2( rot( proj( geometry.vertices[vertex_id] ) ) )
+                                    : projCyl( geometry.vertices[vertex_id] )
+                            )
+                        )
+                    }
+
+
                     geometry.applyMatrix( ( new THREE.Matrix4() ).makeTranslation( 0, 0, -h/2 ) )
 
 
@@ -64,10 +124,7 @@ const buildSlices = ( slices, origin, stepWidth, h=0.5, mat ) =>
                     mesh.name       = `slice-${ axe }${ i }-${ (k+10).toString(34)}`
 
 
-                    mesh.geometry.faceVertexUvs[0]
-                    mesh.geometry.faceVertexUvs[1] =
-                    mesh.geometry.faceVertexUvs[2] =
-                    mesh.geometry.faceVertexUvs[3] = mesh.geometry.faceVertexUvs[0]
+
 
                     mesh.geometry.uvsNeedUpdate = true
 

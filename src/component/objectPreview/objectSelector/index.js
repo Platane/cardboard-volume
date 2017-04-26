@@ -35,7 +35,7 @@ const ObjectSelector = ({ samples, opened, name,   open, close, selectGeometry }
 
         <Transition toTransition={ name } delay={ 1000 }>
             {
-                ({ next: name_next, previous: name_previous, transition: name_transition }) => console.log( 'name_next', name_next ) ||
+                ({ next: name_next, previous: name_previous, transition: name_transition }) =>
 
                     <Transition toTransition={ opened } delay={ 3000 }>
                         {

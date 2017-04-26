@@ -1,8 +1,18 @@
 
-const drawGradient = ( ctx, k, color ) => {
+const drawGradient = ( ctx, k ) => {
     const grd = ctx.createLinearGradient(0, 0, 32, 1)
-    grd.addColorStop(0  , color)
+    grd.addColorStop(0  , 'rgba(0,0,0,0.5)')
     grd.addColorStop(Math.min(1,k)  , 'rgba(0,0,0,0)')
+    grd.addColorStop(1  , 'rgba(0,0,0,0)')
+
+    ctx.fillStyle = grd
+    ctx.beginPath()
+    ctx.rect(0,0,32,16)
+    ctx.fill()
+
+    const grd2 = ctx.createLinearGradient(0, 0, 32, 1)
+    grd.addColorStop(0  , 'rgba(0,0,0,1)')
+    grd.addColorStop(Math.min(1,k*0.23)  , 'rgba(0,0,0,0)')
     grd.addColorStop(1  , 'rgba(0,0,0,0)')
 
     ctx.fillStyle = grd
@@ -41,11 +51,11 @@ export const generateLightMap = (  ) => {
             ctx.fill()
 
             ctx.save()
-            drawGradient(ctx, u, 'black')
+            drawGradient(ctx, u)
 
             ctx.translate(0,16)
 
-            drawGradient(ctx, v, 'black')
+            drawGradient(ctx, v)
             ctx.restore()
         }
     }

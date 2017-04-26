@@ -42,6 +42,18 @@ module.exports = {
             },
 
             {
+                test    : /\.(json|eot|ttf|woff|woff2|svg|gif|jpg|png|bmp)$/,
+                use     : [
+                    {
+                        loader  : 'file-loader',
+                        options : {
+                            name    : '[hash:8].[ext]',
+                        }
+                    }
+                ],
+            },
+
+            {
                 test: /\.css$/,
                 use : [
                     {
