@@ -3996,9 +3996,9 @@ text-hex@0.0.x:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/text-hex/-/text-hex-0.0.0.tgz#578fbc85a6a92636e42dd17b41d0218cce9eb2b3"
 
-three@~0.83.0:
-  version "0.83.0"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.83.0.tgz#3b7f94790af3e021dac1f44a2617569ca2032b0b"
+three@~0.85.2:
+  version "0.85.2"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.85.2.tgz#8936f89c3668f7bf12f9b085ddf5dd409916ea27"
 
 through@~2.3.6:
   version "2.3.8"

@@ -5,10 +5,9 @@ const THREE = require('util/three')
 
 
 const project = ( m, p ) =>
-    ( new THREE.Vector2() )
-        .fromArray(
-            m.applyToVector3Array( p.toArray() )
-        )
+    p
+        .clone()
+        .applyMatrix4( m )
 
 const dot = ( a, b ) =>
     THREE.Vector3.prototype.dot.call( a, b )

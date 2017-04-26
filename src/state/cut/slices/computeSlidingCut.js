@@ -4,10 +4,9 @@ import setOrientation       from 'util/math/polygon/orientation/set'
 const THREE = require('util/three')
 
 const project = ( m, p ) =>
-    ( new THREE.Vector2() )
-        .fromArray(
-            m.applyToVector3Array( [p.x,p.y,p.z] )
-        )
+    p
+        .clone()
+        .applyMatrix4( m )
 
 const pointToArray = a => [a.x, a.y]
 
@@ -48,10 +47,10 @@ const process =  ( axe, fullSlices, base, positions, intersection ) =>
 
     fullSlices.map( ( { _P, P, shapes }, i ) => {
 
-        const vy    = project( _P, base.h ).sub( project( _P, {x:0,y:0,z:0} ) )
+        const vy    = project( _P, base.h ).sub( project( _P, new THREE.Vector3(0,0,0) ) )
 
         // also project u in the v plan
-        const vx    = project( _P, axe == 'u' ? base.v : base.u ).sub( project( _P, {x:0,y:0,z:0} ) )
+        const vx    = project( _P, axe == 'u' ? base.v : base.u ).sub( project( _P, new THREE.Vector3(0,0,0) ) )
 
         const rectangles = positions
 
