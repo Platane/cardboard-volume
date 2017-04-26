@@ -33,38 +33,44 @@ const ObjectSelector = ({ samples, opened, name,   open, close, selectGeometry }
             <div className={ style.name }>{ name }</div>
         </div>
 
-        <Transition toTransition={ opened } delay={ 300 }>
+        <Transition toTransition={ name } delay={ 1000 }>
             {
-                ({ next, previous, transition }) =>
-                    <div className={ style.square } onClick={ opened ? close : open } style={ next ? { height: ( samples.filter( x => x.name != name ).length +2 ) * 50 } : {} }>
+                ({ next: name_next, previous: name_previous, transition: name_transition }) => console.log( 'name_next', name_next ) ||
 
-                        <div className={ style.row +' '+style.rowSelected }>
-                            <div className={ style.iconWrapper }>
-                                <Icon icon={name} className={ style.icon } />
-                            </div>
-                        </div>
-
-                        { next && <ClickOutside onClickOutside={ close } ignoreClassName={ style.square } /> }
-
+                    <Transition toTransition={ opened } delay={ 3000 }>
                         {
-                            ( next || previous ) && samples
-                                .filter( x => x.name != name )
-                                .map( ({ geometry, name }) =>
-                                    <div key={name} className={ style.row } onClick={() => selectGeometry( geometry, name )}>
+                            ({ next: opened_next, previous: opened_previous, transition: opened_transition }) =>
+                                <div className={ style.square } onClick={ opened ? close : open } style={ opened_next ? { height: ( samples.filter( x => x.name != name ).length +2 ) * 50 } : {} }>
+
+                                    <div className={ style.row +' '+style.rowSelected }>
                                         <div className={ style.iconWrapper }>
-                                            <Icon icon={name} className={ style.icon } />
+                                            <Icon icon={name_previous || name_next} className={ style.icon } />
                                         </div>
                                     </div>
-                                )
-                        }
-                        {
-                            ( next || previous ) &&
-                                <div className={ style.row }>
-                                    <div className={ style.icon }>{ 'load' }</div>
-                                    <InputFile onChange={ file => loadGeometry( file ).then( geo => selectGeometry( geo, file.name ) ) } />
+
+                                    { opened_next && <ClickOutside onClickOutside={ close } ignoreClassName={ style.square } /> }
+
+                                    {
+                                        ( opened_next || opened_previous ) && samples
+                                            .filter( x => x.name != (name_previous || name_next) )
+                                            .map( ({ geometry, name }) =>
+                                                <div key={name} className={ style.row } onClick={() => selectGeometry( geometry, name )}>
+                                                    <div className={ style.iconWrapper }>
+                                                        <Icon icon={name} className={ style.icon } />
+                                                    </div>
+                                                </div>
+                                            )
+                                    }
+                                    {
+                                        ( opened_next || opened_previous ) &&
+                                            <div className={ style.row }>
+                                                <div className={ style.icon }>{ 'load' }</div>
+                                                <InputFile onChange={ file => loadGeometry( file ).then( geo => selectGeometry( geo, file.name ) ) } />
+                                            </div>
+                                    }
                                 </div>
                         }
-                    </div>
+                    </Transition>
             }
         </Transition>
     </div>
