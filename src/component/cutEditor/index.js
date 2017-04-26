@@ -41,6 +41,34 @@ const Editor = ( props ) => {
 
     return (
         <div className={ style.container }>
+            <input
+                type="range"
+                value={props.stepWidth.v}
+                min={1}
+                max={30}
+                onChange={ e => props.setStepWidth({...props.stepWidth, v:+e.target.value}) }
+                />
+            <input
+                type="range"
+                value={props.stepWidth.u}
+                min={1}
+                max={30}
+                onChange={ e => props.setStepWidth({...props.stepWidth, u:+e.target.value}) }
+                />
+            <input
+                type="range"
+                value={props.origin.v}
+                min={0}
+                max={30}
+                onChange={ e => props.setOrigin({...props.origin, v:+e.target.value}) }
+                />
+            <input
+                type="range"
+                value={props.origin.u}
+                min={0}
+                max={30}
+                onChange={ e => props.setOrigin({...props.origin, u:+e.target.value}) }
+                />
             <div className={ style.header } />
             <div className={ style.content } >
                 <svg
@@ -50,13 +78,12 @@ const Editor = ( props ) => {
                     viewBox={`${ min.x } ${ min.y } ${ max.x - min.x } ${ max.y - min.y }`}
                     >
 
-
-
                     <Step  {...props} ratio={ ratio } />
 
                     <ObjectShape  {...props} ratio={ ratio } />
 
                     <Origin  {...props} ratio={ ratio } />
+
                 </svg>
             </div>
         </div>
