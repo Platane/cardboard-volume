@@ -6,10 +6,10 @@ const order = ( count, axe, i ) => {
 
     if ( count[ axe ] % 2 == 0 ){
         const k = i - count[ axe ]/2
-        j = Math.abs( k ) * 2 + ( k<0 ? 0 : 1 )
+        j = Math.abs( k ) * 2 + ( k< 0 ? 0 : 1 )
     } else {
         const k = i - ( count[ axe ] -1 )/2
-        j = Math.abs( k ) * 2 + ( k<0 ? 0 : 1 ) -1
+        j = Math.abs( k ) * 2 + ( k< 0 ? 0 : 1 ) -1
     }
 
     return j + ( axe == 'u' ? 0 : count.u )

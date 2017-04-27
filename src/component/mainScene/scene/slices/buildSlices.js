@@ -39,7 +39,7 @@ const buildSlices = ( slices, origin, stepWidth, h=0.5, mat ) =>
     [].concat(
         ...[
             ...slices.u.map( (x,i) => ({ ...x, axe: 'u', origin: origin.v, stepWidth: stepWidth.v, i }) ),
-            ...slices.v.map( (x,i) => ({ ...x, axe: 'v', origin: origin.u, stepWidth: stepWidth.u, i }) )
+            ...slices.v.map( (x,i) => ({ ...x, axe: 'v', origin: -origin.u, stepWidth: stepWidth.u, i }) )
         ]
             .map( ({ axe, origin, stepWidth, i, shapes, P, _P }) =>
 

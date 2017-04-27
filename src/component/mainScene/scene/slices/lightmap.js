@@ -12,7 +12,7 @@ const drawGradient = ( ctx, k ) => {
 
     const grd2 = ctx.createLinearGradient(0, 0, 32, 1)
     grd.addColorStop(0  , 'rgba(0,0,0,1)')
-    grd.addColorStop(Math.min(1,k*0.23)  , 'rgba(0,0,0,0)')
+    grd.addColorStop(Math.min(1,k*0.3)  , 'rgba(0,0,0,0)')
     grd.addColorStop(1  , 'rgba(0,0,0,0)')
 
     ctx.fillStyle = grd

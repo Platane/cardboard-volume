@@ -4,8 +4,67 @@ import buildSlices          from './buildSlices'
 import prepareAnimation     from './prepareAnimation'
 import {generateLightMap}   from './lightmap'
 
-const texture_path = require('../../../../asset/texture/cardboard.jpg')
+const texture_cardboard_path = require('../../../../asset/texture/cardboard.jpg')
 const texture_side_path = require('../../../../asset/texture/side.jpg')
+
+
+const createMat = () => {
+
+    const { image, update } = generateLightMap()
+    const map_ao = new THREE.Texture(image)
+    map_ao.needsUpdate = true
+    map_ao.wrapT = THREE.ClampToEdgeWrapping
+    map_ao.wrapS = THREE.MirroredRepeatWrapping
+    map_ao.repeat.set( 1, 1 )
+
+    const map_cardboard = (new THREE.TextureLoader()).load( texture_cardboard_path )
+    map_cardboard.wrapS = map_cardboard.wrapT = THREE.MirroredRepeatWrapping
+    map_cardboard.repeat.set( 1, 1 )
+
+    const map_side = (new THREE.TextureLoader()).load( texture_side_path )
+    map_side.wrapS = map_side.wrapT = THREE.MirroredRepeatWrapping
+    map_side.repeat.set( 1, 1 )
+
+    const mat_cardboard = new THREE.MeshPhongMaterial({
+        specular        : 0x111111,
+        emissive        : 0x111111,
+        shininess       : 0.4,
+
+        map             : map_cardboard,
+
+        bumpMap         : map_cardboard,
+        bumpScale       : 0.3,
+
+        aoMap           : map_ao,
+        aoMapIntensity  : 3,
+    })
+    const mat_side       = new THREE.MeshPhongMaterial({
+        specular        : 0x111111,
+        emissive        : 0x111111,
+        shininess       : 0.4,
+
+        map             : map_side,
+
+        bumpMap         : map_side,
+        bumpScale       : 0.3,
+
+        aoMap           : map_ao,
+        aoMapIntensity  : 3,
+    })
+
+    return {
+        mat                     : [ mat_cardboard, mat_side ],
+        updateAOmap             : (u, v) => {
+            update(u, v)
+            map_ao.needsUpdate = true
+        },
+        updateAOmapIntensity    : k => {
+            mat_cardboard.aoMapIntensity = k
+            mat_side.aoMapIntensity = k
+        },
+    }
+}
+
 
 module.exports = ( store, scene, renderer, camera ) => {
 
@@ -13,62 +72,7 @@ module.exports = ( store, scene, renderer, camera ) => {
     container.name  = 'slicesContainer'
     scene.add( container )
 
-    const x = generateLightMap()
-    const map = new THREE.Texture(x.image)
-    const updateTexture = x.update
-    map.needsUpdate = true
-    // map.wrapS = map.wrapT = THREE.RepeatWrapping
-    // map.wrapS = map.wrapT = THREE.ClampToEdgeWrapping
-    map.wrapT = THREE.ClampToEdgeWrapping
-    map.wrapS = THREE.MirroredRepeatWrapping
-    map.repeat.set( 1, 1 )
-
-    const map2 = (new THREE.TextureLoader()).load( texture_path )
-    map2.wrapS = map2.wrapT = THREE.MirroredRepeatWrapping
-    map.repeat.set( 1, 1 )
-
-    const mapSide = (new THREE.TextureLoader()).load( texture_side_path )
-    mapSide.wrapS = mapSide.wrapT = THREE.MirroredRepeatWrapping
-    mapSide.repeat.set( 1, 1 )
-
-    const mat       = new THREE.MeshPhongMaterial({
-        // wireframe   : true,
-
-        // color           : 0x2194ce,
-        specular        : 0x111111,
-        emissive        : 0x111111,
-        shininess       : 0.4,
-
-
-        map             : map2,
-
-        bumpMap         : map2,
-        bumpScale       : 0.3,
-
-        // displacementMap : map2,
-        // displacementScale  : 1,
-        // displacementOffset : -1,
-
-        aoMap           : map,
-        aoMapIntensity  : 1,
-    })
-    const matSide       = new THREE.MeshPhongMaterial({
-        // wireframe   : true,
-
-        // color           : 0x2194ce,
-        specular        : 0x111111,
-        emissive        : 0x111111,
-        shininess       : 0.4,
-
-
-        map             : mapSide,
-
-        bumpMap         : mapSide,
-        bumpScale       : 0.3,
-
-        aoMap           : map,
-        aoMapIntensity  : 1,
-    })
+    const {mat, updateAOmap, updateAOmapIntensity} = createMat()
 
     let meshes = []
 
@@ -98,10 +102,9 @@ module.exports = ( store, scene, renderer, camera ) => {
                 if ( !slices )
                     return
 
-                updateTexture( shadow_length/stepWidth.u, shadow_length/stepWidth.v )
-                map.needsUpdate = true
+                updateAOmap( shadow_length/stepWidth.u, shadow_length/stepWidth.v )
 
-                meshes.push( ...buildSlices( slices, origin, stepWidth, 0.5, [ mat, matSide ] ) )
+                meshes.push( ...buildSlices( slices, origin, stepWidth, 0.5, mat ) )
 
                 const count = {
                     u   : slices.u.length,
@@ -128,7 +131,7 @@ module.exports = ( store, scene, renderer, camera ) => {
                     x.animate( k )
                 )
 
-                mat.aoMapIntensity = Math.max( (k - 0.95)/0.05, 0 ) * 2.5
+                updateAOmapIntensity( Math.max( (k - 0.95)/0.05, 0 ) * 1.4 )
             }
         }
 
