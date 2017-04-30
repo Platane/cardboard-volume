@@ -30,10 +30,14 @@ const createMat = () => {
         emissive        : 0x111111,
         shininess       : 0.4,
 
-        map             : map_cardboard,
+        color           : 0x5E412F,
+        emissive        : 0x302210,
+        specular        : 0x937676,
 
+        // map             : map_cardboard,
+        //
         bumpMap         : map_cardboard,
-        bumpScale       : 0.3,
+        bumpScale       : 0.08,
 
         aoMap           : map_ao,
         aoMapIntensity  : 3,
@@ -90,7 +94,7 @@ module.exports = ( store, scene, renderer, camera ) => {
                 const stepWidth = store.getState()['cut.param.stepWidth']
                 const boundingSphere = store.getState()['object.boundingSphere']
 
-                const shadow_length = boundingSphere.radius / 6
+                const shadow_length = boundingSphere.radius / 3
 
                 while( container.children[0] )
                     container.remove( container.children[0] )
@@ -131,7 +135,7 @@ module.exports = ( store, scene, renderer, camera ) => {
                     x.animate( k )
                 )
 
-                updateAOmapIntensity( Math.max( (k - 0.95)/0.05, 0 ) * 1.4 )
+                updateAOmapIntensity( Math.max( (k - 0.95)/0.05, 0 ) * 1.8 )
             }
         }
 

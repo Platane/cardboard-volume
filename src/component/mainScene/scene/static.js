@@ -17,14 +17,39 @@ module.exports = ( store, scene, renderer, camera ) => {
         hemiLight.name= 'hemilight'
         scene.add( hemiLight )
 
+
+        {
+            const light = new THREE.PointLight( 0xFCEBB6, 1.4, 100 )
+            light.position.set(
+                -40,
+                10,
+                60
+            )
+            scene.add( light )
+
+            scene.add( new THREE.PointLightHelper( light, 1 ) )
+        }
+
+        {
+            const light = new THREE.PointLight( 0x78C0A8, 1.4, 100 )
+            light.position.set(
+                40,
+                10,
+                -60
+            )
+            scene.add( light )
+
+            scene.add( new THREE.PointLightHelper( light, 1 ) )
+        }
+
         //
         const dirLight = new THREE.DirectionalLight( 0xffffff, 1 )
         dirLight.color.setHSL( 0.1, 1, 0.95 )
         dirLight.position.set( -1, 1.75, 1 )
         dirLight.position.multiplyScalar( 5 )
         dirLight.castShadow = true
-        dirLight.shadow.mapSize.width = 2048
-        dirLight.shadow.mapSize.height = 2048
+        dirLight.shadow.mapSize.width = 1024
+        dirLight.shadow.mapSize.height = 1024
         dirLight.name= 'dirLight'
         const d = 50
         dirLight.shadow.camera.left = -d
