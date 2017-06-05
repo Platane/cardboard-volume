@@ -26,8 +26,6 @@ const createMat = () => {
     map_side.repeat.set( 1, 1 )
 
     const mat_cardboard = new THREE.MeshPhongMaterial({
-        specular        : 0x111111,
-        emissive        : 0x111111,
         shininess       : 0.4,
 
         color           : 0x5E412F,
@@ -43,8 +41,6 @@ const createMat = () => {
         aoMapIntensity  : 3,
     })
     const mat_side       = new THREE.MeshPhongMaterial({
-        specular        : 0x111111,
-        emissive        : 0x111111,
         shininess       : 0.4,
 
         map             : map_side,
@@ -56,16 +52,23 @@ const createMat = () => {
         aoMapIntensity  : 3,
     })
 
+    const mat_cardboard_variations = [ 0x5E412F, 0x553d2e, 0x5b3923, 0x49372b ]
+        .map( color => {
+            const mat = mat_cardboard.clone()
+            mat.setValues({ color })
+            return mat
+        })
+
     return {
-        mat                     : [ mat_cardboard, mat_side ],
+        mat                     : [ mat_side, ...mat_cardboard_variations ],
         updateAOmap             : (u, v) => {
             update(u, v)
             map_ao.needsUpdate = true
         },
-        updateAOmapIntensity    : k => {
-            mat_cardboard.aoMapIntensity = k
-            mat_side.aoMapIntensity = k
-        },
+        updateAOmapIntensity    : aoMapIntensity =>
+            [ mat_side, ...mat_cardboard_variations ]
+                .forEach( m => m.setValues({ aoMapIntensity }) )
+        ,
     }
 }
 
